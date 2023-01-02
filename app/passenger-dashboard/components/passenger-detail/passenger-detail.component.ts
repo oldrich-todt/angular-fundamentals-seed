@@ -26,14 +26,17 @@ import { Passenger } from "../../models/passenger.interface";
     <button (click)="toggleEdit()">
       {{ editing ? "Done" : "Edit" }}
     </button>
+    <button (click)="goToPassenger()">View</button>
     <button (click)="onRemove()">Remove</button>
   </div>`,
 })
 export class PassengerDetailComponent {
   @Input("passenger") passenger: Passenger;
 
-  @Output("remove") remove: EventEmitter<any> = new EventEmitter();
-  @Output("edit") edit: EventEmitter<any> = new EventEmitter();
+  @Output("remove") remove: EventEmitter<Passenger> =
+    new EventEmitter<Passenger>();
+  @Output("edit") edit: EventEmitter<Passenger> = new EventEmitter<Passenger>();
+  @Output("view") view: EventEmitter<Passenger> = new EventEmitter<Passenger>();
 
   editing: boolean = false;
   constructor() {}
@@ -51,5 +54,9 @@ export class PassengerDetailComponent {
 
   onRemove() {
     this.remove.emit(this.passenger);
+  }
+
+  goToPassenger() {
+    this.view.emit(this.passenger);
   }
 }
